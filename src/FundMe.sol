@@ -46,7 +46,6 @@ contract FundMe {
     function _onlyOwner() internal view {
         if (msg.sender != I_OWNER) revert FundMe__NotOwner();
     }
-
     function cheaperWithdraw() public onlyOwner {
         address[] memory funders = sfunders;
         for (uint256 funderIndex = 0; funderIndex < funders.length; funderIndex++) {
