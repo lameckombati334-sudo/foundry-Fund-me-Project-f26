@@ -2,14 +2,14 @@
 
 pragma solidity ^0.8.18;
 
-import {Test, console} from "forge-std/Test.sol";
+import {Test} from "forge-std/Test.sol";
 import {FundMe} from "src/FundMe.sol";
 import {DeployFundMe} from "script/DeployFundMe.s.sol";
 import {TestHelper} from "../mocks/TestHelper.sol";
 import {MockV3Aggregator} from "../mocks/MockV3Aggregator.sol";
 
 contract FundMeTest is Test {
-    address USER = makeAddr("user");
+    address user = makeAddr("user");
     uint256 constant SEND_VALUE = 0.1 ether;
     uint256 constant STARTING_BALANCE = 10 ether;
     uint256 constant GAS_PRICE = 1;
@@ -19,7 +19,7 @@ contract FundMeTest is Test {
     function setUp() external {
         DeployFundMe deployfundMe = new DeployFundMe();
         fundMe = deployfundMe.run();
-        vm.deal(USER, STARTING_BALANCE);
+        vm.deal(user, STARTING_BALANCE);
     }
 
     function testMinimumDollarIsFive() public view {
@@ -49,26 +49,26 @@ contract FundMeTest is Test {
     }
 
     function testFundUpdatesFundedDataStructure() public {
-        vm.prank(USER);
+        vm.prank(user);
         fundMe.fund{value: SEND_VALUE}();
-        uint256 amountFunded = fundMe.getAddressToAmountFunded(USER);
+        uint256 amountFunded = fundMe.getAddressToAmountFunded(user);
         assertEq(amountFunded, SEND_VALUE);
     }
 
     function testAddsFunderToArrayOfFunders() public {
-        vm.prank(USER);
+        vm.prank(user);
         fundMe.fund{value: SEND_VALUE}();
         address funder = fundMe.getFunder(0);
-        assertEq(funder, USER);
+        assertEq(funder, user);
     }
     modifier funded() {
-        vm.prank(USER);
+        vm.prank(user);
         fundMe.fund{value: SEND_VALUE}();
         _;
     }
 
     function testOnlyOwnerCanWithdraw() public funded {
-        vm.prank(USER);
+        vm.prank(user);
         vm.expectRevert();
         fundMe.withdraw();
     }

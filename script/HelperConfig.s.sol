@@ -5,7 +5,7 @@ import {Script} from "forge-std/Script.sol";
 import {MockV3Aggregator} from "../test/mocks/MockV3Aggregator.sol";
 import {Vm} from "forge-std/Vm.sol";
 
-Vm constant vm = Vm(address(uint160(uint256(keccak256("hevm cheat code")))));
+Vm constant VM = Vm(address(uint160(uint256(keccak256("hevm cheat code")))));
 
 struct NetworkConfig {
     address priceFeed;
@@ -32,8 +32,8 @@ contract HelperConfig is Script {
     }
 
     function getSepoliaEthConfig() internal pure returns (NetworkConfig memory) {
-        NetworkConfig memory SepoliaConfig = NetworkConfig({priceFeed: 0x694AA1769357215DE4FAC081bf1f309aDC325306});
-        return SepoliaConfig;
+        NetworkConfig memory sepoliaConfig = NetworkConfig({priceFeed: 0x694AA1769357215DE4FAC081bf1f309aDC325306});
+        return sepoliaConfig;
     }
 
     function getMainnetEthConfig() internal pure returns (NetworkConfig memory) {

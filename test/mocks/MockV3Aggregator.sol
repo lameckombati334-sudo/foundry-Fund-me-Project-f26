@@ -12,7 +12,7 @@ import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/interfaces/Ag
  * its answer is unimportant
  */
 contract MockV3Aggregator is AggregatorV3Interface {
-    uint256 public constant version = 4;
+    uint256 public constant VERSION = 4;
 
     uint8 public decimals;
     int256 public latestAnswer;
@@ -60,15 +60,21 @@ contract MockV3Aggregator is AggregatorV3Interface {
         returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)
     {
         return (
+             // forge-lint: disable-next-line(unsafe-typecast)
             uint80(latestRound),
             getAnswer[latestRound],
             getStartedAt[latestRound],
             getTimestamp[latestRound],
+             // forge-lint: disable-next-line(unsafe-typecast)
             uint80(latestRound)
         );
     }
 
-    function description() external pure returns (string memory) {
-        return "v0.6/test/mock/MockV3Aggregator.sol";
-    }
+    function version() external pure override returns (uint256) {
+    return VERSION;
+}
+
+function description() external pure override returns (string memory) {
+    return "v0.6/test/mock/MockV3Aggregator.sol";
+}
 }
