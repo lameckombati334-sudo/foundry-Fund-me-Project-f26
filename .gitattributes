@@ -1,0 +1,10 @@
+# Force LF endings for Solidity files
+*.sol text eol=lf
+
+# Optional: enforce LF for other common text files
+*.js text eol=lf
+*.ts text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.md text eol=lf
