@@ -9,8 +9,6 @@ error FundMe__NotOwner();
 
 contract FundMe {
     using PriceConverter for uint256;
-   
-
 
     mapping(address => uint256) private s_addressToAmountFunded;
     address[] internal s_funders;
@@ -22,11 +20,8 @@ contract FundMe {
 
     constructor(address priceFeed) {
         I_OWNER = msg.sender;
-    
 
-        s_priceFeed = AggregatorV3Interface(
-            priceFeed
-        );
+        s_priceFeed = AggregatorV3Interface(priceFeed);
     }
 
     function fund() public payable {
@@ -37,39 +32,21 @@ contract FundMe {
     }
 
     function getVersion() public view returns (uint256) {
-
         return s_priceFeed.version();
     }
+
     function getPriceFeed() public view returns (address) {
-    return address(s_priceFeed);
-}
-modifier onlyOwner() {
+        return address(s_priceFeed);
+    }
+    modifier onlyOwner() {
         // require(msg.sender == owner);
         if (msg.sender != I_OWNER) revert FundMe__NotOwner();
-        _;  
-
+        _;
     }
+
     function cheaperWithdraw() public onlyOwner {
-         address[] memory funders = s_funders;
-        for (uint256 funderIndex = 0; 
-        funderIndex < funders.length;
-         funderIndex++) 
-
-         {
-            address funder =s_funders[funderIndex];
-            s_addressToAmountFunded[funder] = 0;
-        }
-        s_funders = new address[](0);
-
-        (bool callSuccess,) = payable(msg.sender).call{value: address(this).balance}("");
-        require(callSuccess, "Call failed");
-    }
-    function withdraw() public onlyOwner {
-        for (uint256 funderIndex = 0; 
-        funderIndex < s_funders.length;
-         funderIndex++) 
-
-         {
+        address[] memory funders = s_funders;
+        for (uint256 funderIndex = 0; funderIndex < funders.length; funderIndex++) {
             address funder = s_funders[funderIndex];
             s_addressToAmountFunded[funder] = 0;
         }
@@ -79,8 +56,16 @@ modifier onlyOwner() {
         require(callSuccess, "Call failed");
     }
 
+    function withdraw() public onlyOwner {
+        for (uint256 funderIndex = 0; funderIndex < s_funders.length; funderIndex++) {
+            address funder = s_funders[funderIndex];
+            s_addressToAmountFunded[funder] = 0;
+        }
+        s_funders = new address[](0);
 
-  
+        (bool callSuccess,) = payable(msg.sender).call{value: address(this).balance}("");
+        require(callSuccess, "Call failed");
+    }
 
     // Explainer from: https://solidity-by-example.org/fallback/
     // Ether is sent to contract
@@ -101,22 +86,20 @@ modifier onlyOwner() {
     receive() external payable {
         fund();
     }
-  // Mapping assumed to exist:
-// mapping(address => uint256) private s_addressToAmountFunded;
-// address[] private s_funders;
+    // Mapping assumed to exist:
+    // mapping(address => uint256) private s_addressToAmountFunded;
+    // address[] private s_funders;
 
-function getAddressToAmountFunded(address fundingAddress) 
-    external view returns (uint256) {
+    function getAddressToAmountFunded(address fundingAddress) external view returns (uint256) {
         return s_addressToAmountFunded[fundingAddress];
     }
+
     function getFunder(uint256 index) external view returns (address) {
         return s_funders[index];
-        
     }
+
     function getOwner() external view returns (address) {
         return I_OWNER;
     }
-
 }
 
-  

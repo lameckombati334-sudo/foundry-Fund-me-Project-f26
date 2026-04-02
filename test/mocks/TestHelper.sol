@@ -4,7 +4,7 @@ pragma solidity ^0.8.20;
 import "../../src/FundMe.sol";
 
 contract TestHelper is FundMe {
-     constructor(address priceFeed) FundMe(priceFeed) {}
+    constructor(address priceFeed) FundMe(priceFeed) {}
     modifier onlyTest() {
         require(block.chainid == 31337, "Only for local testing");
         _;
