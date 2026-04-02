@@ -38,14 +38,14 @@ contract FundMe {
     function getPriceFeed() public view returns (address) {
         return address(spriceFeed);
     }
-    modifier onlyOwner() {  
-               _onlyOwner();
-         _;    
-         }
-     function _onlyOwner() internal view {
-         if (msg.sender != I_OWNER) revert FundMe__NotOwner();
-   }
+    modifier onlyOwner() {
+        _onlyOwner();
+        _;
+    }
 
+    function _onlyOwner() internal view {
+        if (msg.sender != I_OWNER) revert FundMe__NotOwner();
+    }
 
     function cheaperWithdraw() public onlyOwner {
         address[] memory funders = sfunders;

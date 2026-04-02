@@ -60,21 +60,21 @@ contract MockV3Aggregator is AggregatorV3Interface {
         returns (uint80 roundId, int256 answer, uint256 startedAt, uint256 updatedAt, uint80 answeredInRound)
     {
         return (
-             // forge-lint: disable-next-line(unsafe-typecast)
+            // forge-lint: disable-next-line(unsafe-typecast)
             uint80(latestRound),
             getAnswer[latestRound],
             getStartedAt[latestRound],
             getTimestamp[latestRound],
-             // forge-lint: disable-next-line(unsafe-typecast)
+            // forge-lint: disable-next-line(unsafe-typecast)
             uint80(latestRound)
         );
     }
 
     function version() external pure override returns (uint256) {
-    return VERSION;
-}
+        return VERSION;
+    }
 
-function description() external pure override returns (string memory) {
-    return "v0.6/test/mock/MockV3Aggregator.sol";
-}
+    function description() external pure override returns (string memory) {
+        return "v0.6/test/mock/MockV3Aggregator.sol";
+    }
 }

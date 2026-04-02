@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import {FundMe} from  "../../src/FundMe.sol";
+import {FundMe} from "../../src/FundMe.sol";
 
 contract TestHelper is FundMe {
     constructor(address priceFeed) FundMe(priceFeed) {}
