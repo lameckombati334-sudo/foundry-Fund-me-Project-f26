@@ -13,3 +13,6 @@
 [submodule "libs/foundry-devops"]
 	path = libs/foundry-devops
 	url = https://github.com/Cyfrin/foundry-devops
+[submodule "lib/foundry-devops"]
+	path = lib/foundry-devops
+	url = https://github.com/Cyfrin/foundry-devops
