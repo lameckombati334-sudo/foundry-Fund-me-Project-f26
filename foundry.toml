@@ -10,8 +10,8 @@ remappings = [
 ]
 ffi = true
 [dependencies]
-forge-std = { git = "https://github.com/foundry-rs/forge-std" }
-foundry-devops = { git = "https://github.com/Cyfrin/foundry-devops" }
-chainlink = { git = "https://github.com/smartcontractkit/chainlink" }
+forge-std = { git = "https://github.com/foundry-rs/forge-std", tag = "v1.9.1" }
+foundry-devops = { git = "https://github.com/Cyfrin/foundry-devops", tag = "0.1.0" }
+chainlink = { git = "https://github.com/smartcontractkit/chainlink", tag = "0.8.0" }
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
