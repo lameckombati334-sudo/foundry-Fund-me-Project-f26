@@ -1,17 +1,16 @@
 [profile.default]
 src = "src"
 out = "out"
-libs = ["libs"]
+libs = ["lib"]
 
 remappings = [
   "chainlink-brownie-contracts/=lib/chainlink-brownie-contracts/contracts/",
   "forge-std/=lib/forge-std/src/",
-  "@chainlink/=lib/chainlink/"
+  "foundry-devops/=lib/foundry-devops/src/"
 ]
-ffi = true
-[dependencies]
-forge-std = { git = "https://github.com/foundry-rs/forge-std", tag = "v1.9.1" }
-foundry-devops = { git = "https://github.com/Cyfrin/foundry-devops", tag = "0.1.0" }
-chainlink = { git = "https://github.com/smartcontractkit/chainlink", tag = "0.8.0" }
 
-# See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
+ffi = true
+
+[dependencies]
+forge-std = "github:foundry-rs/forge-std@v1.9.1"
+foundry-devops = "github:Cyfrin/foundry-devops@0.1.0"
