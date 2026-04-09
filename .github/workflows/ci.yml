@@ -10,27 +10,43 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          submodules: recursive
+
+      - name: Cache Forge dependencies
+        uses: actions/cache@v3
+        with:
+          path: lib
+          key: ${{ runner.os }}-forge-${{ hashFiles('**/foundry.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-forge-
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
-          version: nightly
+          version: stable
 
-      - name: Install dependencies
-        run: forge install
-
-      - name: Update dependencies
-        run: forge update
+      # Optional fallback if the above fails
+      - name: Fallback Foundry install
+        if: ${{ failure() }}
+        run: |
+          curl -L https://foundry.paradigm.xyz | bash
+          foundryup
 
       - name: Show Forge version
         run: forge --version
 
-      - name: Run Forge fmt
-        run: forge fmt --check
+      # Only keep if you have dependencies in foundry.toml
+      - name: Install dependencies
+        run: forge install
 
-      - name: Build
-        run: forge build --sizes
+      - name: Check formatting
+        run: forge fmt --check
+        
+      - name: Build contracts
+        run: forge build
 
       - name: Run tests
         run: forge test -vvv
